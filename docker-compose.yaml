@@ -6,8 +6,10 @@ services:
       context: ./admin
     networks:
       - public
+    environment:
+      apiUrl: ${apiUrl}
     ports:
-      - '1337:80'
+      - "${CLIENT_PORT}:${CLIENT_PORT_DOCKER}"
     volumes:
       - ./admin:/admin:ro
       - ./admin/scripts:/admin/scripts
@@ -25,7 +27,7 @@ services:
       - private
       - public
     env_file:
-      - ./server/.env
+      - .env
     ports:
       - "${PORT}:${PORT}"
     volumes:
@@ -40,9 +42,9 @@ services:
     networks:
       - private
     environment:
-      POSTGRES_PASSWORD: $DB_PASSWORD
-      POSTGRES_USER: $DB_USER
-      POSTGRES_DB: $DB_NAME
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - ../2. Init Database:/docker-entrypoint-initdb.d

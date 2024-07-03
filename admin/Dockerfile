@@ -1,7 +1,9 @@
 # Build environment
 FROM node:18.17-alpine as build
 WORKDIR /admin
+
 ENV PATH /admin/node_modules/.bin:$PATH
+
 COPY package.json package-lock.json ./
 RUN npm i --legacy-peer-deps
 COPY . .

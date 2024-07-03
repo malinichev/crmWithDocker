@@ -13,7 +13,7 @@ CMD ["npm", "start"]
 FROM base AS production
 ENV NODE_ENV=production
 COPY . .
-RUN npm run build
+
 CMD ["node", "src/index.js"]
 
 # Docker tools for development
