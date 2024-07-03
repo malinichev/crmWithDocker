@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+  admin:
+    build:
+      context: admin
+    networks:
+      - public
+    ports:
+      - '1337:80'
+    volumes:
+      - ./admin:/admin:ro
+      - ./admin/package.json:/admin/package.json
+      - ./admin/package-lock.json:/admin/package-lock.json
+      - ./admin/scripts:/admin/scripts
+      - ./admin/extractedTranslations:/admin/extractedTranslations
+    stdin_open: true
+    tty: true
+    depends_on:
+      - server
+  server:
+    build:
+      context: server
+    command: npm run start
+    networks:
+      - private
+      - public
+    env_file:
+      - ./server/.env
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - ./server/src:/server/src:ro
+      - ./server/package.json:/server/package.json
+      - ./server/package-lock.json:/server/package-lock.json
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:14.8-alpine3.18
+    restart: always
+    env_file:
+      - ./server/.env
+    networks:
+      - private
+    environment:
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_USER: $DB_USER
+      POSTGRES_DB: $DB_NAME
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - postgres:/var/lib/postgresql/data
+#  pgadmin:
+#    image: dpage/pgadmin4:4.23
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+#      PGADMIN_DEFAULT_PASSWORD: password
+#      PGADMIN_LISTEN_PORT: 80
+#    ports:
+#      - 15432:80
+#    volumes:
+#      - pgadmin:/var/lib/pgadmin
+#    depends_on:
+#      - postgres
+networks:
+  public:
+  private:
+volumes:
+  postgres:
+  pgadmin:

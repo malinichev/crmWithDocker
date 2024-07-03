@@ -1,0 +1,74 @@
+.Code {
+  border: 1px solid var(--primary-color);
+  padding: 20px;
+  position: relative;
+  background: var(--code-bg);
+  overflow: auto;
+}
+
+.CodeRedesigned {
+  width: 100%;
+  padding: 20px 20px 84px;
+  position: relative;
+  background: var(--light-bg-redesigned);
+  overflow: auto;
+  border: 1px solid var(--accent-redesigned);
+  border-radius: 16px;
+}
+
+.CodeBlock {
+  white-space: pre;
+  font-family: Monospace;
+  outline-width: 0;
+}
+
+.container {
+  display: flex;
+  gap: 5px;
+
+  &[data-level="1"] {
+    margin-left: 30px;
+  }
+
+  &[data-level="2"] {
+    margin-left: 60px;
+  }
+
+  &[data-level="3"] {
+    margin-left: 90px;
+  }
+
+  &[data-level="4"] {
+    margin-left: 120px;
+  }
+}
+
+.copyBtn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.addField {
+  margin-top: 20px;
+}
+
+.isClose {
+  height: 0;
+  overflow: hidden;
+}
+
+.addFieldButton {
+  position: absolute;
+  bottom: 20px;
+}
+
+.copyBtnLeft {
+  left: 20px;
+  stroke: var(--primary-color);
+}
+
+
+.copyIcon path {
+  stroke: var(--primary-color);
+}

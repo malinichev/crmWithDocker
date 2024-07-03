@@ -1,0 +1,12 @@
+/build
+node_modules
+.idea
+.env
+/storybook-static
+/reports/unit
+.loki/report.html
+.loki/report.json
+
+# Local Netlify folder
+.netlify
+/.yarn/
