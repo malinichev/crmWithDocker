@@ -6,8 +6,6 @@ services:
       context: ./admin
     networks:
       - public
-    environment:
-      apiUrl: ${apiUrl}
     ports:
       - "${CLIENT_PORT}:${CLIENT_PORT_DOCKER}"
     volumes:
