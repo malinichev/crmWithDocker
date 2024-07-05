@@ -1,4 +1,5 @@
 /build
+/backup/data
 node_modules
 .idea
 .env
