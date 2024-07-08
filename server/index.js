@@ -7,7 +7,7 @@ const modelsRelative = require("./models");
 const errorMiddleware = require("./middleware/error-middleware");
 const router = require("./router");
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.SERVER_PORT || 3001;
 
 const app = express();
 app.use(express.json());
@@ -23,10 +23,6 @@ app.use(errorMiddleware);
 
 const start = async () => {
   try {
-    console.log("start", {
-      credentials: true,
-      origin: process.env.CLIENT_URl + ":" + process.env.CLIENT_PORT,
-    });
     await sequelize.authenticate();
     await sequelize.sync();
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
