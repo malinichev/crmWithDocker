@@ -25,7 +25,7 @@ services:
       - private
       - public
     env_file:
-      - .env
+      - ./server/.env
     ports:
       - "${PORT}:${PORT}"
     volumes:
