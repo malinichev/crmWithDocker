@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { classNames } from '@/shared/lib/classNames/classNames';
 
@@ -25,6 +25,7 @@ import { Button } from '@/shared/ui/Button';
 import { loginAction, loginReducer } from '../../model/slice/LoginSlice';
 import { loginByEmail } from '../../model/services/loginByEmail/loginByEmail';
 import { getRouteMain } from '@/shared/const/router';
+import { registerByEmail } from '../../model/services/registerByEmail/registerByEmail';
 
 interface LoginFormProps {
     className?: string;
@@ -36,6 +37,7 @@ const reducers: ReducersList = {
 
 const LoginForm = memo(({ className }: LoginFormProps) => {
     const { t } = useTranslation();
+    const [regMode, setRegMode] = useState(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const error = useSelector(getLoginError);
@@ -51,6 +53,10 @@ const LoginForm = memo(({ className }: LoginFormProps) => {
         [dispatch],
     );
 
+    const onChangeRegMade = useCallback(() => {
+        setRegMode((prev) => !prev);
+    }, []);
+
     const onChangePassword = useCallback(
         (value: string) => {
             dispatch(loginAction.setPassword(value));
@@ -59,12 +65,13 @@ const LoginForm = memo(({ className }: LoginFormProps) => {
     );
 
     const onLoginClick = useCallback(async () => {
-        const result = await dispatch(loginByEmail({ email, password }));
+        const result = regMode
+            ? await dispatch(registerByEmail({ email, password }))
+            : await dispatch(loginByEmail({ email, password }));
         if (result.meta.requestStatus === 'fulfilled') {
-            console.log(22222);
             navigate(getRouteMain());
         }
-    }, [dispatch, email, navigate, password]);
+    }, [regMode, dispatch, email, navigate, password]);
 
     return (
         <DynamicModuleLoader reducers={reducers}>
@@ -74,7 +81,6 @@ const LoginForm = memo(({ className }: LoginFormProps) => {
                 justify="end"
             >
                 <Text title={t('Форма авторизации')} />
-
                 <Input
                     autofocus
                     type="email"
@@ -102,6 +108,18 @@ const LoginForm = memo(({ className }: LoginFormProps) => {
                         className={cls.loginBtnRedesigned}
                     >
                         {t('Войти')}
+                    </Button>
+                </HStack>
+                <HStack max gap="16">
+                    <Button
+                        variant="outline"
+                        onClick={onChangeRegMade}
+                        disabled={isLoading}
+                        className={cls.loginBtnRedesigned}
+                    >
+                        {regMode
+                            ? t('Поменять режим на: вход')
+                            : t('Поменять режим на: регистрацию')}
                     </Button>
                 </HStack>
             </VStack>

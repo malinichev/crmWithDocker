@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: process.env.CLIENT_URl + ':' + process.env.CLIENT_PORT,
+    origin: process.env.CLIENT_URl + ":" + process.env.CLIENT_PORT,
   }),
 );
 app.use(cookieParser());
@@ -23,6 +23,10 @@ app.use(errorMiddleware);
 
 const start = async () => {
   try {
+    console.log("start", {
+      credentials: true,
+      origin: process.env.CLIENT_URl + ":" + process.env.CLIENT_PORT,
+    });
     await sequelize.authenticate();
     await sequelize.sync();
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
