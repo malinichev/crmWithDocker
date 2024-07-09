@@ -1,21 +1,22 @@
 version: "3.8"
 
 services:
-  admin:
-    build:
-      context: ./admin
-    networks:
-      - public
-    ports:
-      - "${CLIENT_PORT}:${CLIENT_PORT_DOCKER}"
-    volumes:
-      - ./admin:/admin:ro
-      - ./admin/scripts:/admin/scripts
-      - ./admin/extractedTranslations:/admin/extractedTranslations
-    stdin_open: true
-    tty: true
-    depends_on:
-      - server
+#  admin:
+#    build:
+#      context: ./admin
+#    networks:
+#      - public
+#    ports:
+#      - "${CLIENT_PORT}:${CLIENT_PORT_DOCKER}"
+#    volumes:
+#      - ./admin:/admin:ro
+#      - ./admin/build:/admin/build
+#      - ./admin/scripts:/admin/scripts
+#      - ./admin/extractedTranslations:/admin/extractedTranslations
+#    stdin_open: true
+#    tty: true
+#    depends_on:
+#      - server
 
   server:
     build:
@@ -25,7 +26,7 @@ services:
       - private
       - public
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "3001:3001"
     volumes:
       - ./server/src:/server/src:ro
       - ./server:/server
@@ -41,9 +42,6 @@ services:
       SMTP_PORT: ${SMTP_PORT}
       SMTP_USER: ${SMTP_USER}
       SMTP_PASS: ${SMTP_PASS}
-      SERVER_PORT: ${SERVER_PORT}
-      CLIENT_PORT: ${CLIENT_PORT}
-      CLIENT_URl: ${CLIENT_URl}
     depends_on:
       - postgres
 

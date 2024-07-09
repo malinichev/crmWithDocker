@@ -10,7 +10,7 @@
     "start:vite": "vite",
     "start": "webpack serve --env port=3000 apiUrl=http://localhost:3001/api",
     "start:dev:server": "node ./json-server/index.js",
-    "build:prod": "webpack  --env mode=production",
+    "build:prod": "webpack  --env mode=production port=8888 apiUrl=http://localhost:3001/api",
     "build:dev": "webpack  --env mode=development",
     "prettier": "npx prettier --write **/*.{ts,tsx}",
     "lint:ts": "eslint \"**/*.{ts,tsx}\"",
@@ -28,6 +28,7 @@
     "storybook": "storybook dev -p 6006 -c ./config/storybook",
     "storybook:build": "storybook build -c ./config/storybook",
     "generate:slice": "node ./scripts/createSlice/index.js",
+    "postinstall": "node ./scripts/clear-cache.js",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
     "remove-feature": "ts-node ./scripts/remove-feature.ts"

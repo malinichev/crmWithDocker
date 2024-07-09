@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: process.env.CLIENT_URl + ":" + process.env.CLIENT_PORT,
+    origin: "http://localhost:8888",
   }),
 );
 app.use(cookieParser());
