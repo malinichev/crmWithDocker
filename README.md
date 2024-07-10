@@ -4,15 +4,25 @@
 
 Приложение распространяется как Docker-контейнер.
 
-Пример:
-
-```
-docker compose up
-```
-
-Приложение внутри контейнера слушает `80` порт.
-
 Данные параметры можно скорректировать в `.env`.
+
+поменять в /server/index.js 
+cors options на тот хост который нужен
+
+поменять в /admin/package.json
+для build:prod apiUrl
+
+запустить
+
+Пример:
+```
+docker compose up -d
+
+chmod +x ./deploy.sh
+./deploy.sh
+```
+
+
 
 ## Development
 

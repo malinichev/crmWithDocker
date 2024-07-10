@@ -8,13 +8,14 @@ const errorMiddleware = require("./middleware/error-middleware");
 const router = require("./router");
 
 const PORT = process.env.SERVER_PORT || 3001;
+const URL = process.env.URL || "localhost";
 
 const app = express();
 app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:8888",
+    origin: `http://${URL}:8888`,
   }),
 );
 app.use(cookieParser());
